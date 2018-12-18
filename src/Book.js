@@ -1,6 +1,7 @@
 //src/book.js
 
 import React from 'react';
+//import * as BooksAPI from './BooksAPI';
 
 class Book extends React.Component{
     constructor(props){
@@ -14,8 +15,20 @@ class Book extends React.Component{
                 {key: 5, value: 'none', text: 'None'}
             ],
         book : this.props.book,
-        query : this.props.query
+        query : this.props.query,
+        bookShelf : this.props.shelf,
+        
         } 
+    }
+    componentDidMount(){
+     /*   BooksAPI.get(this.state.book.id)
+            .then((book) => {this.setState(
+                (book => ({bookShelf: book.shelf}))
+            )}
+                
+            ) */
+            console.log('Mount in Book');
+            console.log(this.props.shelf);
     }
     updateShelf=this.props.updateShelf;
     handleChange=(e)=>{
@@ -29,29 +42,47 @@ class Book extends React.Component{
         this.setState(()=>({
             book : book
         }))
-        
+        e.target.selected = true;
     }
 
     render(){
-        
+        console.log(this.state.book.id)
+        console.log(this.state.bookShelf)
+        console.log('in book');
+        const stat = (
+                        this.state.bookShelf.length === 1) ?
+        this.state.bookShelf[0].shelf  :'none'
+        //console.log(this.state.bookShelf.shelf)
+        console.log(stat);
         return(
             <div className='book' style={{text :'bold'}}>
                 <div className='book-top'>
                     <div className='book-cover'
                         style={{ width: 128, height: 193,
-                            backgroundImage: `url(${this.state.book.imageLinks.smallThumbnail})` }}
+                            backgroundImage: (this.state.book.imageLinks !== undefined)
+                            ? `url(${this.state.book.imageLinks.smallThumbnail})` 
+                            : `url({${'./icons/add.svg'}})`
+                             }}
                         > 
                     </div>
                     <div className="book-shelf-changer">
-                        <select onChange = {this.handleChange}>
+                        <select value ={stat} onChange = {this.handleChange}>
                             {this.state.optionsData.map(option =>(
                                 <option key={option.key} 
-                                        value={option.value}>{option.text}</option>                            
+                                        value={option.value} 
+                                    disabled = {option.key ===1 && (true)} 
+                                   
+                                     >
+                                    {option.text}</option>                            
                             ))}
                             
                         </select>
                     </div>
-                </div>{this.state.book.title}  
+                </div>
+                <div className="book-title">{this.state.book.title}</div>
+                <div className="book-authors">
+                    {this.state.book.authors +', '  }
+                </div>
             </div>
         )
     }
