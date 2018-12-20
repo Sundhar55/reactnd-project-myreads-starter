@@ -1,7 +1,6 @@
 //src/book.js
 
 import React from 'react';
-//import * as BooksAPI from './BooksAPI';
 
 class Book extends React.Component{
     constructor(props){
@@ -16,44 +15,26 @@ class Book extends React.Component{
             ],
         book : this.props.book,
         query : this.props.query,
-        bookShelf : this.props.shelf,
+        bookShelf : this.props.shelf.length ===1 ? this.props.shelf[0].shelf : 'none',
+        targetShelfValue : 'none'
+        
         
         } 
+        
     }
-    componentDidMount(){
-     /*   BooksAPI.get(this.state.book.id)
-            .then((book) => {this.setState(
-                (book => ({bookShelf: book.shelf}))
-            )}
-                
-            ) */
-            console.log('Mount in Book');
-            console.log(this.props.shelf);
-    }
+    
     updateShelf=this.props.updateShelf;
     handleChange=(e)=>{
-        console.log(e.target.value);
-        console.log(this.state.book);
-        //const val = this.state.optionsData.filter((item)=> item.value === e.target.value);
         const shelf = e.target.value;
-        console.log(shelf);
         const book = this.state.book;
-        this.updateShelf(this.state.book, shelf);
         this.setState(()=>({
-            book : book
+            book : book,
+            bookShelf : shelf
         }))
-        e.target.selected = true;
+        this.updateShelf(this.state.book, shelf);
     }
 
     render(){
-        console.log(this.state.book.id)
-        console.log(this.state.bookShelf)
-        console.log('in book');
-        const stat = (
-                        this.state.bookShelf.length === 1) ?
-        this.state.bookShelf[0].shelf  :'none'
-        //console.log(this.state.bookShelf.shelf)
-        console.log(stat);
         return(
             <div className='book' style={{text :'bold'}}>
                 <div className='book-top'>
@@ -66,7 +47,7 @@ class Book extends React.Component{
                         > 
                     </div>
                     <div className="book-shelf-changer">
-                        <select value ={stat} onChange = {this.handleChange}>
+                        <select value ={this.state.bookShelf} onChange = {this.handleChange}>
                             {this.state.optionsData.map(option =>(
                                 <option key={option.key} 
                                         value={option.value} 

@@ -7,17 +7,12 @@ class BookList extends React.Component{
     render(){
         const {bookList,shelf} = this.props;
         
-        console.log('BL');
-        console.log(bookList);
-        console.log('shlefin List')
-        
         return(
             <div>
                 <ol className='books-grid'>
                     {bookList.map((book) => (
                         <li className='b' key={book.id} shelf={shelf}>
                             <Book book={book} 
-                            /*shelf={this.shelf} */
                             shelf={ [{bookId : book.id, shelf : book.shelf  }]} 
                             updateShelf = {this.props.updateShelf}
                              />
