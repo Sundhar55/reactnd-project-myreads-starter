@@ -5,7 +5,7 @@ import Book from './Book';
 
 class BookList extends React.Component{
     render(){
-        const {bookList,shelf} = this.props;
+        const {bookList,shelf,updateShelf} = this.props;
         
         return(
             <div>
@@ -14,7 +14,7 @@ class BookList extends React.Component{
                         <li className='b' key={book.id} shelf={shelf}>
                             <Book book={book} 
                             shelf={ [{bookId : book.id, shelf : book.shelf  }]} 
-                            updateShelf = {this.props.updateShelf}
+                            updateShelf = {updateShelf}
                              />
                         </li>
                     ))}
