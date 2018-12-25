@@ -37,9 +37,7 @@ class SearchBooks extends React.Component{
     }
     handleChange(e){
         const query = e.target.value;
-        this.setState(()=>({
-            query : query
-        }));
+        this.setState(()=>({ query }));
         this.SearchBooks(query)
     }
 

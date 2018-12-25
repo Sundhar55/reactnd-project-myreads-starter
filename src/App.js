@@ -1,8 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import {Link} from 'react-router-dom';
-import {Route} from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
 import BookShelf from './BookShelf';
 import BookList from './BookList';
 import SearchBooks from './SearchBooks';
@@ -28,8 +27,7 @@ class BooksApp extends React.Component {
       this.setState(()=> ({
         shelfedBooks : books.map(book => ({bookId : book.id, shelf:book.shelf}))
       }))
-      
-    }) 
+     }) 
   }
   
   updateShelf = (book, shelf,query) =>{
